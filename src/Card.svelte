@@ -1,11 +1,8 @@
 <script>
   import { articles } from './store'
-
   export let card = {}
   export let randomize
-
   let articleEl
-
   const isGameOver = () => {
     if (document.querySelectorAll('.matched').length === 16) {
       alert('You won! 🔥')
@@ -36,14 +33,10 @@
 
   const handleClick = (e, _callback) => {
     articleEl.classList.toggle('flipped')
-
     $articles = [...$articles, articleEl.getAttribute('data-name')]
-
     if ($articles.length < 2) return
-
-    setTimeout(_callback(), 1000)
+    setTimeout(_callback, 1000)
   }
-
   // $: console.log($articles)
 </script>
 
