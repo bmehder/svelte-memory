@@ -3,11 +3,14 @@
 
   export let card = {}
   export let randomize
+  export let clicks = 0
+
+  const ALL_MATCHES = 16
 
   let articleEl
 
   const isGameOver = () => {
-    if (document.querySelectorAll('.matched').length === 16) {
+    if (document.querySelectorAll('.matched').length === ALL_MATCHES) {
       alert('You won! 🔥')
 
       document.querySelectorAll('.matched').forEach(item => {
@@ -39,11 +42,17 @@
   }
 
   const handleClick = (e, _callback) => {
+    articleEl.style.pointerEvents = 'none'
+
     articleEl.classList.toggle('flipped')
 
     $articles = [...$articles, articleEl.getAttribute('data-name')]
 
+    articleEl.style.pointerEvents = 'all'
+
     if ($articles.length < 2) return
+
+    clicks++
 
     setTimeout(_callback, 1000)
   }

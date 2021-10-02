@@ -3,6 +3,7 @@
   import Card from './Card.svelte'
 
   let shuffledCards = []
+  let clicks = 0
 
   const randomize = () => {
     shuffledCards = data.sort(() => Math.random() - 0.5)
@@ -12,10 +13,10 @@
 <svelte:body use:randomize />
 
 <main>
-  <h1>Memory</h1>
+  <h1>Memory {clicks}</h1>
   <section>
     {#each shuffledCards as card}
-      <Card {card} {randomize} />
+      <Card {card} {randomize} bind:clicks />
     {/each}
   </section>
 </main>
