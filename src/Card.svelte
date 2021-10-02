@@ -1,17 +1,23 @@
 <script>
   import { articles } from './store'
+
   export let card = {}
   export let randomize
+
   let articleEl
+
   const isGameOver = () => {
     if (document.querySelectorAll('.matched').length === 16) {
       alert('You won! 🔥')
+
       document.querySelectorAll('.matched').forEach(item => {
         item.classList.remove('matched')
       })
+
       document.querySelectorAll('.flipped').forEach(item => {
         item.classList.remove('flipped')
       })
+
       randomize()
     }
   }
@@ -26,6 +32,7 @@
         item.classList.add('matched')
       })
     }
+
     $articles = []
     setTimeout(_callback, 1000)
     setTimeout(isGameOver, 1000)
@@ -33,8 +40,11 @@
 
   const handleClick = (e, _callback) => {
     articleEl.classList.toggle('flipped')
+
     $articles = [...$articles, articleEl.getAttribute('data-name')]
+
     if ($articles.length < 2) return
+
     setTimeout(_callback, 1000)
   }
 </script>
