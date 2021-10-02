@@ -12,6 +12,7 @@
 <svelte:body use:randomize />
 
 <main>
+  <h1>Memory</h1>
   <section>
     {#each shuffledCards as card}
       <Card {card} {randomize} />
@@ -24,6 +25,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+  h1 {
+    margin-bottom: 1rem;
+    text-align: center;
   }
   main {
     display: flex;
