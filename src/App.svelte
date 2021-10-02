@@ -29,6 +29,7 @@
   h1 {
     margin-bottom: 1rem;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
   }
   main {
     display: flex;

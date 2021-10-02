@@ -37,7 +37,6 @@
     if ($articles.length < 2) return
     setTimeout(_callback, 1000)
   }
-  // $: console.log($articles)
 </script>
 
 <article
@@ -50,10 +49,21 @@
 </article>
 
 <style>
+  /*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.3.6,
+* Autoprefixer: v10.3.1
+* Browsers: last 4 version
+*/
+
   article {
     position: relative;
+    -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
+    -webkit-transition: all 1s ease;
+    -o-transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
   img,
@@ -63,17 +73,21 @@
     position: absolute;
   }
   img {
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
   }
   div {
     background-color: white;
     border: 1px solid #eee;
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
   :global(.flipped) {
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
   }
   :global(.matched) {
+    -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
   }
 </style>
