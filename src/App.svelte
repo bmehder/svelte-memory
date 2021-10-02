@@ -1,0 +1,51 @@
+<script>
+  import { data } from './data'
+  import Card from './Card.svelte'
+
+  let shuffledCards = []
+
+  const randomize = () => {
+    shuffledCards = data.sort(() => Math.random() - 0.5)
+  }
+</script>
+
+<svelte:body use:randomize />
+
+<main>
+  <section>
+    {#each shuffledCards as card}
+      <Card {card} {randomize} />
+    {/each}
+  </section>
+</main>
+
+<style>
+  :global(*, body) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #4158d0;
+    background-image: linear-gradient(
+      43deg,
+      #4158d0 0%,
+      #c850c0 46%,
+      #ffcc70 100%
+    );
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  section {
+    display: grid;
+    grid-template-columns: repeat(4, 8em);
+    grid-template-rows: repeat(4, 8em);
+    gap: 2rem;
+    perspective: 800px;
+  }
+</style>
