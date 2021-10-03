@@ -87,7 +87,6 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    border-radius: 1em;
   }
   img {
     -webkit-transform: rotateY(180deg);
