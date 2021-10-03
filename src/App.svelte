@@ -4,8 +4,8 @@
   import Card from './Card.svelte'
 
   let shuffledCards = []
-  let clicks = 0
   let cards = []
+  let clicks = 0
 
   const randomize = () => {
     cards = [...rawData, ...rawData]
@@ -30,11 +30,6 @@
 </main>
 
 <style>
-  :global(*, body) {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
   h1,
   h2 {
     margin-bottom: 1rem;
@@ -59,9 +54,17 @@
   }
   section {
     display: grid;
-    grid-template-columns: repeat(4, 8em);
-    grid-template-rows: repeat(4, 8em);
+    grid-template-columns: repeat(4, 10vw);
+    grid-template-rows: repeat(4, 10vw);
     gap: 2rem;
     perspective: 800px;
+  }
+  @media screen and (max-width: 600px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+    h2 {
+      font-size: 1rem;
+    }
   }
 </style>
