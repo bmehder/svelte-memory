@@ -1,57 +1,83 @@
 <script>
-  import { articles } from './store'
+  import { articles, bestScore } from './store'
 
   export let card = {}
   export let randomize
   export let clicks = 0
 
-  const ALL_MATCHES = 16
-
   let articleEl
 
+  // Predicates
+  const isCardsMatch = () => $articles[0] === $articles[1]
+
   const isGameOver = () => {
-    if (document.querySelectorAll('.matched').length === ALL_MATCHES) {
-      alert('You won! 🔥')
-
-      document.querySelectorAll('.matched').forEach(item => {
-        item.classList.remove('matched')
-      })
-
-      document.querySelectorAll('.flipped').forEach(item => {
-        item.classList.remove('flipped')
-      })
-
-      clicks = 0
-      randomize()
-    }
+    const ALL_MATCHES = 16
+    return document.querySelectorAll('.matched').length === ALL_MATCHES
   }
 
+  const updateArticleState = () =>
+    ($articles = [...$articles, articleEl.getAttribute('data-name')])
+
+  // DOM Manipulation
+  const removeFlippedClasses = () => {
+    document.querySelectorAll('.flipped').forEach(item => {
+      item.classList.remove('flipped')
+    })
+  }
+
+  const removeMatchedClasses = () => {
+    document.querySelectorAll('.matched').forEach(item => {
+      item.classList.remove('matched')
+    })
+  }
+
+  const addMatchedClass = () => {
+    document.querySelectorAll('.flipped').forEach(item => {
+      item.classList.add('matched')
+    })
+  }
+
+  const toggleFlipped = () => articleEl.classList.toggle('flipped')
+
+  // Reset State and Init
+  const resetGame = () => {
+    alert('You won! 🔥')
+    removeMatchedClasses()
+    removeFlippedClasses()
+
+    if (clicks < $bestScore) {
+      $bestScore = clicks
+    }
+
+    clicks = 0
+    randomize()
+  }
+
+  // Event Listener Callback
   const checkForMatch = () => {
-    if ($articles[0] !== $articles[1]) {
-      document.querySelectorAll('.flipped').forEach(item => {
-        item.classList.remove('flipped')
-      })
+    if (isCardsMatch()) {
+      addMatchedClass()
     } else {
-      document.querySelectorAll('.flipped').forEach(item => {
-        item.classList.add('matched')
-      })
+      removeFlippedClasses()
     }
 
     $articles = []
-    setTimeout(isGameOver, 1000)
+
+    setTimeout(() => isGameOver() && resetGame(), 1000)
   }
 
-  const handleClick = (e, _callback) => {
-    articleEl.classList.toggle('flipped')
-
-    $articles = [...$articles, articleEl.getAttribute('data-name')]
+  // Event Listener
+  const handleClick = (e, checkForMatch) => {
+    toggleFlipped()
+    updateArticleState()
 
     if ($articles.length < 2) return
 
     clicks++
 
-    setTimeout(_callback, 1000)
+    setTimeout(checkForMatch, 1000)
   }
+  // $: console.log(clicks)
 </script>
 
 <article
@@ -64,13 +90,6 @@
 </article>
 
 <style>
-  /*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.3.6,
-* Autoprefixer: v10.3.1
-* Browsers: last 4 version
-*/
-
   article {
     position: relative;
     -webkit-transform-style: preserve-3d;

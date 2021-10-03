@@ -1,5 +1,6 @@
 <script>
   import { data } from './data'
+  import { bestScore } from './store'
   import Card from './Card.svelte'
 
   let shuffledCards = []
@@ -14,6 +15,7 @@
 
 <main>
   <h1>Memory ({clicks} {clicks === 1 ? 'try' : 'tries'})</h1>
+  <h2>Best Score: {$bestScore === Infinity ? 'No score' : $bestScore}</h2>
   <section>
     {#each shuffledCards as card}
       <Card {card} {randomize} bind:clicks />
@@ -27,7 +29,8 @@
     padding: 0;
     box-sizing: border-box;
   }
-  h1 {
+  h1,
+  h2 {
     margin-bottom: 1rem;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
