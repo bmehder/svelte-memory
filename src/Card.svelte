@@ -37,6 +37,18 @@
     })
   }
 
+  const removeAllClickEventListeners = () => {
+    document.querySelectorAll('article').forEach(item => {
+      item.style.pointerEvents = 'none'
+    })
+  }
+
+  const addAllClickEventListeners = () => {
+    document.querySelectorAll('article').forEach(item => {
+      item.style.pointerEvents = 'auto'
+    })
+  }
+
   const toggleFlipped = () => articleEl.classList.toggle('flipped')
 
   // Reset State and Init
@@ -70,8 +82,11 @@
 
   // Event Listener
   const handleClick = (e, checkForMatch) => {
+    removeAllClickEventListeners()
     toggleFlipped()
     updateArticleState()
+
+    setTimeout(addAllClickEventListeners, 1100)
 
     if ($articles.length < 2) return
 
@@ -79,7 +94,6 @@
 
     setTimeout(checkForMatch, 1000)
   }
-  // $: console.log(clicks)
 </script>
 
 <article
