@@ -13,7 +13,7 @@
 <svelte:body use:randomize />
 
 <main>
-  <h1>Memory {clicks}</h1>
+  <h1>Memory ({clicks} {clicks === 1 ? 'try' : 'tries'})</h1>
   <section>
     {#each shuffledCards as card}
       <Card {card} {randomize} bind:clicks />

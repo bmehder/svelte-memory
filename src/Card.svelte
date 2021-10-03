@@ -26,7 +26,7 @@
     }
   }
 
-  const checkForMatch = _callback => {
+  const checkForMatch = () => {
     if ($articles[0] !== $articles[1]) {
       document.querySelectorAll('.flipped').forEach(item => {
         item.classList.remove('flipped')
@@ -38,7 +38,6 @@
     }
 
     $articles = []
-    setTimeout(_callback, 1000)
     setTimeout(isGameOver, 1000)
   }
 
