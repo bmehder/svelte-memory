@@ -21,6 +21,7 @@
         item.classList.remove('flipped')
       })
 
+      clicks = 0
       randomize()
     }
   }
@@ -42,13 +43,9 @@
   }
 
   const handleClick = (e, _callback) => {
-    articleEl.style.pointerEvents = 'none'
-
     articleEl.classList.toggle('flipped')
 
     $articles = [...$articles, articleEl.getAttribute('data-name')]
-
-    articleEl.style.pointerEvents = 'all'
 
     if ($articles.length < 2) return
 
