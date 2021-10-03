@@ -49,6 +49,8 @@
       $bestScore = clicks
     }
 
+    localStorage.setItem('bestScore', $bestScore)
+
     clicks = 0
     randomize()
   }

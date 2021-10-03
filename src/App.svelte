@@ -9,6 +9,10 @@
   const randomize = () => {
     shuffledCards = data.sort(() => Math.random() - 0.5)
   }
+
+  if (localStorage.getItem('bestScore')) {
+    $bestScore = localStorage.getItem('bestScore')
+  }
 </script>
 
 <svelte:body use:randomize />
