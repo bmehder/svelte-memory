@@ -41,7 +41,7 @@
 
   // Reset State and Init
   const resetGame = () => {
-    alert('You won! 🔥')
+    alert('Game Over! 🔥')
     removeMatchedClasses()
     removeFlippedClasses()
 

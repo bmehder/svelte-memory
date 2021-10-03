@@ -1,13 +1,15 @@
 <script>
-  import { data } from './data'
+  import { rawData } from './data'
   import { bestScore } from './store'
   import Card from './Card.svelte'
 
   let shuffledCards = []
   let clicks = 0
+  let cards = []
 
   const randomize = () => {
-    shuffledCards = data.sort(() => Math.random() - 0.5)
+    cards = [...rawData, ...rawData]
+    shuffledCards = cards.sort(() => Math.random() - 0.5)
   }
 
   if (localStorage.getItem('bestScore')) {
