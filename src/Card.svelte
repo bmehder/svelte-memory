@@ -37,13 +37,13 @@
     })
   }
 
-  const removeAllClickEventListeners = () => {
+  const removeAllPointerEvents = () => {
     document.querySelectorAll('article').forEach(item => {
       item.style.pointerEvents = 'none'
     })
   }
 
-  const addAllClickEventListeners = () => {
+  const addAllPointerEvents = () => {
     document.querySelectorAll('article').forEach(item => {
       item.style.pointerEvents = 'auto'
     })
@@ -69,6 +69,8 @@
 
   // Event Listener Callback
   const checkForMatch = () => {
+    removeAllPointerEvents()
+
     if (isCardsMatch()) {
       addMatchedClass()
     } else {
@@ -77,22 +79,21 @@
 
     $articles = []
 
+    addAllPointerEvents()
+
     setTimeout(() => isGameOver() && resetGame(), 1000)
   }
 
   // Event Listener
   const handleClick = (e, checkForMatch) => {
-    removeAllClickEventListeners()
     toggleFlipped()
     updateArticleState()
-
-    setTimeout(addAllClickEventListeners, 1100)
 
     if ($articles.length < 2) return
 
     clicks++
 
-    setTimeout(checkForMatch, 1000)
+    setTimeout(checkForMatch, 800)
   }
 </script>
 
@@ -112,7 +113,7 @@
     transform-style: preserve-3d;
     -webkit-transition: all 1s ease;
     -o-transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 800ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
