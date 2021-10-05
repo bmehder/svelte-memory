@@ -6,6 +6,7 @@
   export let clicks = 0
 
   let articleEl
+  let isWaiting = false
 
   // Predicates
   const isCardsMatch = () => $articles[0] === $articles[1]
@@ -37,17 +38,17 @@
     })
   }
 
-  const removeAllPointerEvents = () => {
-    document.querySelectorAll('article').forEach(item => {
-      item.style.pointerEvents = 'none'
-    })
-  }
+  // const removePointerEventsFromArticles = () => {
+  //   document.querySelectorAll('article').forEach(item => {
+  //     item.style.pointerEvents = 'none'
+  //   })
+  // }
 
-  const addAllPointerEvents = () => {
-    document.querySelectorAll('article').forEach(item => {
-      item.style.pointerEvents = 'auto'
-    })
-  }
+  // const addPointerEventsToArticles = () => {
+  //   document.querySelectorAll('article').forEach(item => {
+  //     item.style.pointerEvents = 'auto'
+  //   })
+  // }
 
   const toggleFlipped = () => articleEl.classList.toggle('flipped')
 
@@ -69,7 +70,7 @@
 
   // Event Listener Callback
   const checkForMatch = () => {
-    removeAllPointerEvents()
+    // removePointerEventsFromArticles()
 
     if (isCardsMatch()) {
       addMatchedClass()
@@ -79,7 +80,7 @@
 
     $articles = []
 
-    addAllPointerEvents()
+    // addPointerEventsToArticles()
 
     setTimeout(() => isGameOver() && resetGame(), 1000)
   }
@@ -97,14 +98,23 @@
   }
 </script>
 
-<article
-  bind:this={articleEl}
-  on:click={e => handleClick(e, checkForMatch)}
-  data-name={card.name}
->
-  <img src={card.src} alt={card.name} />
-  <div />
-</article>
+{#if !isWaiting}
+  <article
+    bind:this={articleEl}
+    on:click={e => handleClick(e, checkForMatch)}
+    data-name={card.name}
+  >
+    <img src={card.src} alt={card.name} />
+    <div />
+  </article>
+{/if}
+
+{#if isWaiting}
+  <article bind:this={articleEl} data-name={card.name}>
+    <img src={card.src} alt={card.name} />
+    <div />
+  </article>
+{/if}
 
 <style>
   article {
