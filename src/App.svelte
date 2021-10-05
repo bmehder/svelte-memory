@@ -58,6 +58,7 @@
     grid-template-rows: repeat(4, 10vw);
     gap: 2rem;
     perspective: 800px;
+    -webkit-perspective: 800px;
   }
   @media screen and (max-width: 600px) {
     h1 {

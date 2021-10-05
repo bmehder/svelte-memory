@@ -82,6 +82,7 @@
 
     setTimeout(checkForMatch, 800)
   }
+
   $: console.log(clicks)
 </script>
 
@@ -119,6 +120,8 @@
     width: 100%;
     height: 100%;
     position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   img {
     -webkit-transform: rotateY(180deg);
@@ -127,8 +130,8 @@
   div {
     background-color: white;
     border: 1px solid #eee;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+    /* -webkit-backface-visibility: hidden; */
+    /* backface-visibility: hidden; */
   }
   :global(.flipped) {
     -webkit-transform: rotateY(180deg);
