@@ -38,18 +38,6 @@
     })
   }
 
-  // const removePointerEventsFromArticles = () => {
-  //   document.querySelectorAll('article').forEach(item => {
-  //     item.style.pointerEvents = 'none'
-  //   })
-  // }
-
-  // const addPointerEventsToArticles = () => {
-  //   document.querySelectorAll('article').forEach(item => {
-  //     item.style.pointerEvents = 'auto'
-  //   })
-  // }
-
   const toggleFlipped = () => articleEl.classList.toggle('flipped')
 
   // Reset State and Init
@@ -70,8 +58,7 @@
 
   // Event Listener Callback
   const checkForMatch = () => {
-    // removePointerEventsFromArticles()
-
+    isWaiting = true
     if (isCardsMatch()) {
       addMatchedClass()
     } else {
@@ -80,8 +67,7 @@
 
     $articles = []
 
-    // addPointerEventsToArticles()
-
+    isWaiting = false
     setTimeout(() => isGameOver() && resetGame(), 1000)
   }
 
@@ -96,6 +82,7 @@
 
     setTimeout(checkForMatch, 800)
   }
+  $: console.log(clicks)
 </script>
 
 {#if !isWaiting}
