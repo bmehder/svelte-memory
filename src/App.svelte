@@ -7,7 +7,7 @@
   let cards = []
   let clicks = 0
 
-  const randomize = () => {
+  const randomizeCards = () => {
     cards = [...rawData, ...rawData]
     shuffledCards = cards.sort(() => Math.random() - 0.5)
   }
@@ -17,14 +17,14 @@
   }
 </script>
 
-<svelte:body use:randomize />
+<svelte:body use:randomizeCards />
 
 <main>
   <h1>Memory ({clicks} {clicks === 1 ? 'try' : 'tries'})</h1>
   <h2>Best Score: {$bestScore === Infinity ? 'No score' : $bestScore}</h2>
   <section>
     {#each shuffledCards as card}
-      <Card {card} {randomize} bind:clicks />
+      <Card {card} {randomizeCards} bind:clicks />
     {/each}
   </section>
 </main>

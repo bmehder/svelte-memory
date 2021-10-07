@@ -2,27 +2,29 @@
   import { selectedCards, bestScore } from './store'
 
   export let card = {}
-  export let randomize
+  export let randomizeCards
   export let clicks = 0
+
+  const ALL_MATCHES = 16
 
   let articleEl
 
   // Predicates
   const isCardsMatch = () => $selectedCards[0] === $selectedCards[1]
 
-  const isGameOver = () => {
-    const ALL_MATCHES = 16
-    return document.querySelectorAll('.matched').length === ALL_MATCHES
-  }
+  const isGameOver = () =>
+    document.querySelectorAll('.matched').length === ALL_MATCHES
 
   // Update App State
   const addCardItemToSelectedCards = () =>
     ($selectedCards = [...$selectedCards, articleEl.getAttribute('data-name')])
 
-  // DOM Manipulation
-  const removeClasses = elClass => {
-    document.querySelectorAll(`.${elClass}`).forEach(item => {
-      item.classList.remove(elClass)
+  // DOM Manipulation functions
+  const removeClasses = elClasses => {
+    elClasses.forEach(elClass => {
+      document.querySelectorAll(`.${elClass}`).forEach(item => {
+        item.classList.remove(elClass)
+      })
     })
   }
 
@@ -36,8 +38,7 @@
 
   const resetGame = () => {
     alert('Game Over! 🔥')
-    removeClasses('matched')
-    removeClasses('flipped')
+    removeClasses(['matched', 'flipped'])
 
     if (clicks < $bestScore) {
       $bestScore = clicks
@@ -46,7 +47,7 @@
     localStorage.setItem('bestScore', $bestScore)
 
     clicks = 0
-    randomize()
+    randomizeCards()
   }
 
   const checkForMatch = () => {
@@ -57,7 +58,7 @@
     if (isCardsMatch()) {
       addMatchedClass()
     } else {
-      removeClasses('flipped')
+      removeClasses(['flipped'])
     }
 
     $selectedCards = []
