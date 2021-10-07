@@ -1,34 +1,28 @@
 <script>
-  import { articles, bestScore } from './store'
+  import { selectedCards, bestScore } from './store'
 
   export let card = {}
   export let randomize
   export let clicks = 0
 
   let articleEl
-  let isWaiting = false
 
   // Predicates
-  const isCardsMatch = () => $articles[0] === $articles[1]
+  const isCardsMatch = () => $selectedCards[0] === $selectedCards[1]
 
   const isGameOver = () => {
     const ALL_MATCHES = 16
     return document.querySelectorAll('.matched').length === ALL_MATCHES
   }
 
-  const updateArticleState = () =>
-    ($articles = [...$articles, articleEl.getAttribute('data-name')])
+  // Update App State
+  const addCardItemToSelectedCards = () =>
+    ($selectedCards = [...$selectedCards, articleEl.getAttribute('data-name')])
 
   // DOM Manipulation
-  const removeFlippedClasses = () => {
-    document.querySelectorAll('.flipped').forEach(item => {
-      item.classList.remove('flipped')
-    })
-  }
-
-  const removeMatchedClasses = () => {
-    document.querySelectorAll('.matched').forEach(item => {
-      item.classList.remove('matched')
+  const removeClasses = elClass => {
+    document.querySelectorAll(`.${elClass}`).forEach(item => {
+      item.classList.remove(elClass)
     })
   }
 
@@ -40,11 +34,10 @@
 
   const toggleFlipped = () => articleEl.classList.toggle('flipped')
 
-  // Reset State and Init
   const resetGame = () => {
     alert('Game Over! 🔥')
-    removeMatchedClasses()
-    removeFlippedClasses()
+    removeClasses('matched')
+    removeClasses('flipped')
 
     if (clicks < $bestScore) {
       $bestScore = clicks
@@ -56,53 +49,37 @@
     randomize()
   }
 
-  // Event Listener Callback
   const checkForMatch = () => {
-    isWaiting = true
-    if (isCardsMatch()) {
-      addMatchedClass()
-    } else {
-      removeFlippedClasses()
-    }
-
-    $articles = []
-
-    isWaiting = false
-    setTimeout(() => isGameOver() && resetGame(), 1000)
-  }
-
-  // Event Listener
-  const handleClick = (e, checkForMatch) => {
-    toggleFlipped()
-    updateArticleState()
-
-    if ($articles.length < 2) return
+    if ($selectedCards.length < 2) return
 
     clicks++
 
-    setTimeout(checkForMatch, 800)
+    if (isCardsMatch()) {
+      addMatchedClass()
+    } else {
+      removeClasses('flipped')
+    }
+
+    $selectedCards = []
+
+    setTimeout(() => isGameOver() && resetGame(), 1000)
   }
 
-  $: console.log(clicks)
+  const handleClick = () => {
+    toggleFlipped()
+    addCardItemToSelectedCards()
+  }
 </script>
 
-{#if !isWaiting}
-  <article
-    bind:this={articleEl}
-    on:click={e => handleClick(e, checkForMatch)}
-    data-name={card.name}
-  >
-    <img src={card.src} alt={card.name} />
-    <div />
-  </article>
-{/if}
-
-{#if isWaiting}
-  <article bind:this={articleEl} data-name={card.name}>
-    <img src={card.src} alt={card.name} />
-    <div />
-  </article>
-{/if}
+<article
+  bind:this={articleEl}
+  on:click={handleClick}
+  on:transitionend={checkForMatch}
+  data-name={card.name}
+>
+  <img src={card.src} alt={card.name} />
+  <div />
+</article>
 
 <style>
   article {
@@ -130,8 +107,6 @@
   div {
     background-color: white;
     border: 1px solid #eee;
-    /* -webkit-backface-visibility: hidden; */
-    /* backface-visibility: hidden; */
   }
   :global(.flipped) {
     -webkit-transform: rotateY(180deg);
